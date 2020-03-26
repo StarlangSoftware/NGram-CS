@@ -19,7 +19,7 @@ namespace NGram
          * It adds all sentences of corpus as ngrams.</summary>
          *
          * <param name="corpus">{@link ArrayList} list of sentences whose ngrams are added.</param>
-         * <param name="N">size of ngram.</param>
+         * <param name="n">size of ngram.</param>
          */
         public NGram(List<List<TSymbol>> corpus, int n)
         {
@@ -35,7 +35,7 @@ namespace NGram
         /**
          * <summary>Constructor of {@link NGram} class which takes {@link Integer} size of ngram.</summary>
          *
-         * <param name="N">size of ngram.</param>
+         * <param name="n">size of ngram.</param>
          */
         public NGram(int n)
         {
@@ -168,6 +168,40 @@ namespace NGram
         }
 
         /**
+         * <summary>Calculates NGram probabilities using {@link ArrayList} given corpus and {@link TrainedSmoothing} smoothing method.</summary>
+         *
+         * <param name="corpus">corpus for calculating NGram probabilities.</param>
+         * <param name="trainedSmoothing">instance of smoothing method for calculating ngram probabilities.</param>
+         */
+        public void CalculateNGramProbabilities(List<List<TSymbol>> corpus,
+            TrainedSmoothing<TSymbol> trainedSmoothing)
+        {
+            trainedSmoothing.Train(corpus, this);
+        }
+
+        /**
+         * <summary>Calculates NGram probabilities using {@link SimpleSmoothing} simple smoothing.</summary>
+         *
+         * <param name="simpleSmoothing">{@link SimpleSmoothing}</param>
+         */
+        public void CalculateNGramProbabilities(SimpleSmoothing<TSymbol> simpleSmoothing)
+        {
+            simpleSmoothing.SetProbabilities(this);
+        }
+
+        /**
+         * <summary>Calculates NGram probabilities given {@link SimpleSmoothing} simple smoothing and level.</summary>
+         *
+         * <param name="simpleSmoothing">{@link SimpleSmoothing}</param>
+         * <param name="level">Level for which N-Gram probabilities will be set.</param>
+         *
+         */
+        public void CalculateNGramProbabilities(SimpleSmoothing<TSymbol> simpleSmoothing, int level)
+        {
+            simpleSmoothing.SetProbabilities(this, level);
+        }
+
+        /**
          * <summary>Replaces words not in {@link HashSet} given dictionary.</summary>
          *
          * <param name="dictionary">dictionary of known words.</param>
@@ -218,13 +252,13 @@ namespace NGram
             {
                 foreach (var symbol in symbols)
                 {
-                    double p = GetProbability(symbol);
-                    sum -= Math.Log(p);
+                    var p = GetProbability(symbol);
+                    sum -= System.Math.Log(p);
                     count++;
                 }
             }
 
-            return Math.Exp(sum / count);
+            return System.Math.Exp(sum / count);
         }
 
         /**
@@ -243,13 +277,13 @@ namespace NGram
             {
                 for (var j = 0; j < symbols.Count - 1; j++)
                 {
-                    double p = GetProbability(symbols[j], symbols[j + 1]);
-                    sum -= Math.Log(p);
+                    var p = GetProbability(symbols[j], symbols[j + 1]);
+                    sum -= System.Math.Log(p);
                     count++;
                 }
             }
 
-            return Math.Exp(sum / count);
+            return System.Math.Exp(sum / count);
         }
 
         /**
@@ -268,12 +302,12 @@ namespace NGram
                 for (var j = 0; j < symbols.Count - 2; j++)
                 {
                     var p = GetProbability(symbols[j], symbols[j + 1], symbols[j + 2]);
-                    sum -= Math.Log(p);
+                    sum -= System.Math.Log(p);
                     count++;
                 }
             }
 
-            return Math.Exp(sum / count);
+            return System.Math.Exp(sum / count);
         }
 
         /**

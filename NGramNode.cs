@@ -442,11 +442,11 @@ namespace NGram
          */
         public TSymbol GenerateNextString(List<TSymbol> s, int index)
         {
-            double sum = 0.0, prob;
-            Random random = new Random();
+            double sum = 0.0;
+            var random = new Random();
             if (index == s.Count)
             {
-                prob = random.NextDouble();
+                var prob = random.NextDouble();
                 foreach (var node in _children.Values)
                 {
                     if (prob < node._probability + sum)
@@ -476,7 +476,7 @@ namespace NGram
         {
             if (!isRootNode)
             {
-                for (int i = 0; i < level; i++)
+                for (var i = 0; i < level; i++)
                 {
                     streamWriter.Write("\t");
                 }
@@ -484,7 +484,7 @@ namespace NGram
                 streamWriter.WriteLine(_symbol.ToString());
             }
 
-            for (int i = 0; i < level; i++)
+            for (var i = 0; i < level; i++)
             {
                 streamWriter.Write("\t");
             }
