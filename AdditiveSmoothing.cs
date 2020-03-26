@@ -66,7 +66,7 @@ namespace NGram
          * <summary>Wrapper function to learn the parameter (delta) in additive smoothing. The function first creates K NGrams
          * with the train folds of the corpus. Then optimizes delta with respect to the test folds of the corpus</summary>
          * <param name="corpus">Train corpus used to optimize delta parameter</param>
-         * <param name="N">N in N-Gram.</param>
+         * <param name="n">N in N-Gram.</param>
          */
         protected override void LearnParameters(List<List<TSymbol>> corpus, int n)
         {

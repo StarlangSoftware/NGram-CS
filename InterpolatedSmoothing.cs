@@ -156,11 +156,11 @@ namespace NGram
          * <summary>Wrapper function to learn the parameters (lambda1 and lambda2) in interpolated smoothing. The function first creates K NGrams
          * with the train folds of the corpus. Then optimizes lambdas with respect to the test folds of the corpus depending on given N.</summary>
          * <param name="corpus">Train corpus used to optimize lambda parameters</param>
-         * <param name="N">N in N-Gram.</param>
+         * <param name="n">N in N-Gram.</param>
          */
-        protected override void LearnParameters(List<List<TSymbol>> corpus, int N)
+        protected override void LearnParameters(List<List<TSymbol>> corpus, int n)
         {
-            if (N <= 1)
+            if (n <= 1)
             {
                 return;
             }
@@ -170,8 +170,8 @@ namespace NGram
             var kFoldCrossValidation = new KFoldCrossValidation<List<TSymbol>>(corpus, K, 0);
             for (var i = 0; i < K; i++)
             {
-                nGrams[i] = new NGram<TSymbol>(kFoldCrossValidation.GetTrainFold(i), N);
-                for (var j = 2; j <= N; j++)
+                nGrams[i] = new NGram<TSymbol>(kFoldCrossValidation.GetTrainFold(i), n);
+                for (var j = 2; j <= n; j++)
                 {
                     nGrams[i].CalculateNGramProbabilities(_simpleSmoothing, j);
                 }
@@ -179,13 +179,13 @@ namespace NGram
                 nGrams[i].CalculateNGramProbabilities(_simpleSmoothing, 1);
             }
 
-            if (N == 2)
+            if (n == 2)
             {
                 _lambda1 = LearnBestLambda(nGrams, kFoldCrossValidation, 0.1);
             }
             else
             {
-                if (N == 3)
+                if (n == 3)
                 {
                     var bestLambdas = LearnBestLambdas(nGrams, kFoldCrossValidation, 0.1, 0.1);
                     _lambda1 = bestLambdas[0];
