@@ -33,7 +33,7 @@ namespace NGram
                 for (var value = lowerBound; value <= upperBound; value += (upperBound - lowerBound) / numberOfParts)
                 {
                     double perplexity = 0;
-                    for (int i = 0; i < 10; i++)
+                    for (var i = 0; i < 10; i++)
                     {
                         nGrams[i].SetProbabilityWithPseudoCount(value, nGrams[i].GetN());
                         perplexity += nGrams[i].GetPerplexity(kFoldCrossValidation.GetTestFold(i));
@@ -91,6 +91,14 @@ namespace NGram
          */
         public override void SetProbabilities(NGram<TSymbol> nGram, int level) {
             nGram.SetProbabilityWithPseudoCount(_delta, level);
+        }
+
+        /**
+         * Gets the best delta.
+         * <returns>Learned best delta.</returns>
+         */
+        public double GetDelta(){
+            return _delta;
         }
 
     }

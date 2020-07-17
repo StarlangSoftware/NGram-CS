@@ -199,7 +199,7 @@ namespace NGram
                     var r = child._count;
                     if (r <= 5)
                     {
-                        double newR = ((r + 1) * N[r + 1]) / N[r];
+                        var newR = ((r + 1) * N[r + 1]) / N[r];
                         sum += newR;
                     }
                     else
@@ -213,7 +213,7 @@ namespace NGram
                     var r = child._count;
                     if (r <= 5)
                     {
-                        double newR = ((r + 1) * N[r + 1]) / N[r];
+                        var newR = ((r + 1) * N[r + 1]) / N[r];
                         child._probability = (1 - pZero) * (newR / sum);
                     }
                     else
@@ -311,7 +311,7 @@ namespace NGram
                 return _unknown.GetUniGramProbability(w2);
             }
 
-            return 0;
+            throw new UnseenCase();
         }
 
         /**
@@ -329,15 +329,13 @@ namespace NGram
                 var child = _children[w1];
                 return child.GetBiGramProbability(w2, w3);
             }
-            else
-            {
-                if (_unknown != null)
-                {
-                    return _unknown.GetBiGramProbability(w2, w3);
-                }
 
-                return 0;
+            if (_unknown != null)
+            {
+                return _unknown.GetBiGramProbability(w2, w3);
             }
+
+            throw new UnseenCase();
         }
 
         /**
@@ -442,7 +440,7 @@ namespace NGram
          */
         public TSymbol GenerateNextString(List<TSymbol> s, int index)
         {
-            double sum = 0.0;
+            var sum = 0.0;
             var random = new Random();
             if (index == s.Count)
             {

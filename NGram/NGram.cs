@@ -52,7 +52,7 @@ namespace NGram
          */
         public NGram(string fileName)
         {
-            StreamReader br = new StreamReader(fileName);
+            var br = new StreamReader(fileName);
             var line = br.ReadLine();
             var items = line.Split(" ");
             this._n = int.Parse(items[0]);
@@ -61,14 +61,14 @@ namespace NGram
             this._probabilityOfUnseen = new double[_n];
             line = br.ReadLine();
             items = line.Split(" ");
-            for (int i = 0; i < _n; i++)
+            for (var i = 0; i < _n; i++)
             {
                 this._probabilityOfUnseen[i] = double.Parse(items[i]);
             }
 
             this._vocabulary = new HashSet<TSymbol>();
             var vocabularySize = int.Parse(br.ReadLine());
-            for (int i = 0; i < vocabularySize; i++)
+            for (var i = 0; i < vocabularySize; i++)
             {
                 this._vocabulary.Add((TSymbol) Convert.ChangeType(br.ReadLine(), typeof(TSymbol)));
             }
@@ -121,7 +121,7 @@ namespace NGram
                 _vocabulary.Add(symbol);
             }
 
-            for (int j = 0; j < symbols.Length - _n + 1; j++)
+            for (var j = 0; j < symbols.Length - _n + 1; j++)
             {
                 rootNode.AddNGram(symbols, j, _n, count);
             }
@@ -405,7 +405,14 @@ namespace NGram
          */
         private double GetBiGramProbability(TSymbol w1, TSymbol w2)
         {
-            return rootNode.GetBiGramProbability(w1, w2);
+            try
+            {
+                return rootNode.GetBiGramProbability(w1, w2);
+            }
+            catch (UnseenCase unseenCase)
+            {
+                return _probabilityOfUnseen[1];
+            }
         }
 
         /**
@@ -417,7 +424,14 @@ namespace NGram
          */
         private double GetTriGramProbability(TSymbol w1, TSymbol w2, TSymbol w3)
         {
-            return rootNode.GetTriGramProbability(w1, w2, w3);
+            try
+            {
+                return rootNode.GetTriGramProbability(w1, w2, w3);
+            }
+            catch (UnseenCase unseenCase)
+            {
+                return _probabilityOfUnseen[2];
+            }
         }
 
         /**

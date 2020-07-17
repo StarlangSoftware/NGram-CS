@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <PackageId>NlpToolkit-NGram</PackageId>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NlpToolkit-DataStructure" Version="1.0.1" />
+      <PackageReference Include="NlpToolkit-Math" Version="1.0.1" />
+      <PackageReference Include="NlpToolkit-Sampling" Version="1.0.1" />
+    </ItemGroup>
+
+</Project>
