@@ -35,7 +35,7 @@ namespace NGram
         {
             if (!isRootNode)
             {
-                this._symbol = (TSymbol) Convert.ChangeType(streamReader.ReadLine(), typeof(TSymbol));
+                this._symbol = (TSymbol) Convert.ChangeType(streamReader.ReadLine().Trim(), typeof(TSymbol));
             }
 
             var line = streamReader.ReadLine();
@@ -50,6 +50,30 @@ namespace NGram
                 for (var i = 0; i < numberOfChildren; i++)
                 {
                     var childNode = new NGramNode<TSymbol>(false, streamReader);
+                    _children.Add(childNode._symbol, childNode);
+                }
+            }
+        }
+
+        public NGramNode(bool isRootNode, MultipleFile multipleFile)
+        {
+            if (!isRootNode)
+            {
+                this._symbol = (TSymbol) Convert.ChangeType(multipleFile.ReadLine().Trim(), typeof(TSymbol));
+            }
+
+            var line = multipleFile.ReadLine();
+            var items = line.Split(" ");
+            this._count = int.Parse(items[0]);
+            this._probability = double.Parse(items[1]);
+            this._probabilityOfUnseen = double.Parse(items[2]);
+            var numberOfChildren = int.Parse(items[3]);
+            if (numberOfChildren > 0)
+            {
+                _children = new Dictionary<TSymbol, NGramNode<TSymbol>>();
+                for (var i = 0; i < numberOfChildren; i++)
+                {
+                    var childNode = new NGramNode<TSymbol>(false, multipleFile);
                     _children.Add(childNode._symbol, childNode);
                 }
             }

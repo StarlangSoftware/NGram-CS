@@ -11,8 +11,8 @@ namespace NGram
         private int _n;
         private double _lambda1, _lambda2;
         private bool _interpolated = false;
-        private readonly HashSet<TSymbol> _vocabulary;
-        private readonly double[] _probabilityOfUnseen;
+        private HashSet<TSymbol> _vocabulary;
+        private double[] _probabilityOfUnseen;
 
         /**
          * <summary>Constructor of {@link NGram} class which takes a {@link ArrayList} corpus and {@link Integer} size of ngram as input.
@@ -45,14 +45,8 @@ namespace NGram
             rootNode = new NGramNode<TSymbol>(default(TSymbol));
         }
 
-        /**
-         * <summary>Constructor of {@link NGram} class which takes filename to read from text file.</summary>
-         *
-         * <param name="fileName">name of the text file where NGram is saved.</param>
-         */
-        public NGram(string fileName)
+        public void ReadHeader(StreamReader br)
         {
-            var br = new StreamReader(fileName);
             var line = br.ReadLine();
             var items = line.Split(" ");
             this._n = int.Parse(items[0]);
@@ -72,9 +66,27 @@ namespace NGram
             {
                 this._vocabulary.Add((TSymbol) Convert.ChangeType(br.ReadLine(), typeof(TSymbol)));
             }
+        }
 
+        /**
+         * <summary>Constructor of {@link NGram} class which takes filename to read from text file.</summary>
+         *
+         * <param name="fileName">name of the text file where NGram is saved.</param>
+         */
+        public NGram(string fileName)
+        {
+            var br = new StreamReader(fileName);
+            ReadHeader(br);
             rootNode = new NGramNode<TSymbol>(true, br);
             br.Close();
+        }
+
+        public NGram(params string[] fileNameList)
+        {
+            var multipleFile = new MultipleFile(fileNameList);
+            ReadHeader(multipleFile.GetStreamReader());
+            rootNode = new NGramNode<TSymbol>(true, multipleFile);
+            multipleFile.Close();
         }
 
         /**

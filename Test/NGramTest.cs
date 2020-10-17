@@ -82,5 +82,15 @@ namespace Test
             simpleBiGram.SaveAsText("simple2.txt");
             simpleTriGram.SaveAsText("simple3.txt");
         }
+        
+        [Test]
+        public void TestLoadMultiPart(){
+            simpleUniGram = new NGram<string>("../../../simple1part1.txt", "../../../simple1part2.txt");
+            simpleBiGram = new NGram<string>("../../../simple2part1.txt", "../../../simple2part2.txt", "../../../simple2part3.txt");
+            simpleTriGram = new NGram<string>("../../../simple3part1.txt", "../../../simple3part2.txt", "../../../simple3part3.txt", "../../../simple3part4.txt");
+            TestGetCountSimple();
+            TestVocabularySizeSimple();
+        }
+
     }
 }
