@@ -527,6 +527,14 @@ namespace NGram
             _probabilityOfUnseen[height - 1] = 1.0 / (VocabularySize() + 1);
         }
 
+        public void Prune(double threshold)
+        {
+            if (threshold > 0.0 && threshold <= 1.0)
+            {
+                rootNode.Prune(threshold, _n - 1);
+            }
+        }
+
         /**
          * <summary>Save this NGram to a text file.</summary>
          *

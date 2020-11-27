@@ -34,29 +34,29 @@ namespace Test
         [Test]
         public void TestGetCountSimple()
         {
-            Assert.AreEqual(5, simpleUniGram.GetCount(new [] {"<s>"}), 0.0);
-            Assert.AreEqual(0, simpleUniGram.GetCount(new [] {"mahmut"}), 0.0);
-            Assert.AreEqual(1, simpleUniGram.GetCount(new [] {"kitabı"}), 0.0);
-            Assert.AreEqual(4, simpleBiGram.GetCount(new [] {"<s>", "ali"}), 0.0);
-            Assert.AreEqual(0, simpleBiGram.GetCount(new [] {"ayşe", "ali"}), 0.0);
-            Assert.AreEqual(0, simpleBiGram.GetCount(new [] {"mahmut", "ali"}), 0.0);
-            Assert.AreEqual(2, simpleBiGram.GetCount(new [] {"at", "mehmet"}), 0.0);
-            Assert.AreEqual(1, simpleTriGram.GetCount(new [] {"<s>", "ali", "top"}), 0.0);
-            Assert.AreEqual(0, simpleTriGram.GetCount(new [] {"ayşe", "kitabı", "at"}), 0.0);
-            Assert.AreEqual(0, simpleTriGram.GetCount(new [] {"ayşe", "topu", "at"}), 0.0);
-            Assert.AreEqual(0, simpleTriGram.GetCount(new [] {"mahmut", "evde", "kal"}), 0.0);
-            Assert.AreEqual(2, simpleTriGram.GetCount(new [] {"ali", "topu", "at"}), 0.0);
+            Assert.AreEqual(5, simpleUniGram.GetCount(new[] {"<s>"}), 0.0);
+            Assert.AreEqual(0, simpleUniGram.GetCount(new[] {"mahmut"}), 0.0);
+            Assert.AreEqual(1, simpleUniGram.GetCount(new[] {"kitabı"}), 0.0);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"ayşe", "ali"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"mahmut", "ali"}), 0.0);
+            Assert.AreEqual(2, simpleBiGram.GetCount(new[] {"at", "mehmet"}), 0.0);
+            Assert.AreEqual(1, simpleTriGram.GetCount(new[] {"<s>", "ali", "top"}), 0.0);
+            Assert.AreEqual(0, simpleTriGram.GetCount(new[] {"ayşe", "kitabı", "at"}), 0.0);
+            Assert.AreEqual(0, simpleTriGram.GetCount(new[] {"ayşe", "topu", "at"}), 0.0);
+            Assert.AreEqual(0, simpleTriGram.GetCount(new[] {"mahmut", "evde", "kal"}), 0.0);
+            Assert.AreEqual(2, simpleTriGram.GetCount(new[] {"ali", "topu", "at"}), 0.0);
         }
 
         [Test]
         public void TestGetCountComplex()
         {
-            Assert.AreEqual(20000, complexUniGram.GetCount(new [] {"<s>"}), 0.0);
-            Assert.AreEqual(50, complexUniGram.GetCount(new [] {"atatürk"}), 0.0);
-            Assert.AreEqual(11, complexBiGram.GetCount(new [] {"<s>", "mustafa"}), 0.0);
-            Assert.AreEqual(3, complexBiGram.GetCount(new [] {"mustafa", "kemal"}), 0.0);
-            Assert.AreEqual(1, complexTriGram.GetCount(new [] {"<s>", "mustafa", "kemal"}), 0.0);
-            Assert.AreEqual(1, complexTriGram.GetCount(new [] {"mustafa", "kemal", "atatürk"}), 0.0);
+            Assert.AreEqual(20000, complexUniGram.GetCount(new[] {"<s>"}), 0.0);
+            Assert.AreEqual(50, complexUniGram.GetCount(new[] {"atatürk"}), 0.0);
+            Assert.AreEqual(11, complexBiGram.GetCount(new[] {"<s>", "mustafa"}), 0.0);
+            Assert.AreEqual(3, complexBiGram.GetCount(new[] {"mustafa", "kemal"}), 0.0);
+            Assert.AreEqual(1, complexTriGram.GetCount(new[] {"<s>", "mustafa", "kemal"}), 0.0);
+            Assert.AreEqual(1, complexTriGram.GetCount(new[] {"mustafa", "kemal", "atatürk"}), 0.0);
         }
 
         [Test]
@@ -76,21 +76,52 @@ namespace Test
         }
 
         [Test]
+        public void TestPrune()
+        {
+            simpleBiGram.Prune(0.0);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(1, simpleBiGram.GetCount(new[] {"<s>", "ayşe"}), 0.0);
+            Assert.AreEqual(3, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
+            Assert.AreEqual(1, simpleBiGram.GetCount(new[] {"ali", "top"}), 0.0);
+            Assert.AreEqual(2, simpleBiGram.GetCount(new[] {"topu", "at"}), 0.0);
+            Assert.AreEqual(1, simpleBiGram.GetCount(new[] {"topu", "mehmete"}), 0.0);
+            simpleBiGram.Prune(0.6);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"<s>", "ayşe"}), 0.0);
+            Assert.AreEqual(3, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"ali", "top"}), 0.0);
+            Assert.AreEqual(2, simpleBiGram.GetCount(new[] {"topu", "at"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"topu", "mehmete"}), 0.0);
+            simpleBiGram.Prune(0.7);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(3, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"topu", "at"}), 0.0);
+            simpleBiGram.Prune(0.8);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
+            simpleBiGram.Prune(0.9);
+            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+        }
+
+
+        [Test]
         public void TestSaveAsText()
         {
             simpleUniGram.SaveAsText("simple1.txt");
             simpleBiGram.SaveAsText("simple2.txt");
             simpleTriGram.SaveAsText("simple3.txt");
         }
-        
+
         [Test]
-        public void TestLoadMultiPart(){
+        public void TestLoadMultiPart()
+        {
             simpleUniGram = new NGram<string>("../../../simple1part1.txt", "../../../simple1part2.txt");
-            simpleBiGram = new NGram<string>("../../../simple2part1.txt", "../../../simple2part2.txt", "../../../simple2part3.txt");
-            simpleTriGram = new NGram<string>("../../../simple3part1.txt", "../../../simple3part2.txt", "../../../simple3part3.txt", "../../../simple3part4.txt");
+            simpleBiGram = new NGram<string>("../../../simple2part1.txt", "../../../simple2part2.txt",
+                "../../../simple2part3.txt");
+            simpleTriGram = new NGram<string>("../../../simple3part1.txt", "../../../simple3part2.txt",
+                "../../../simple3part3.txt", "../../../simple3part4.txt");
             TestGetCountSimple();
             TestVocabularySizeSimple();
         }
-
     }
 }

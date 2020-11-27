@@ -487,6 +487,33 @@ namespace NGram
             return default(TSymbol);
         }
 
+        public void Prune(double threshold, int N)
+        {
+            if (N == 0)
+            {
+                var toBeDeleted = new List<TSymbol>();
+                foreach (var symbol in _children.Keys)
+                {
+                    if (_children[symbol]._count / (_count + 0.0) < threshold)
+                    {
+                        toBeDeleted.Add(symbol);
+                    }
+                }
+
+                foreach (var symbol in toBeDeleted)
+                {
+                    _children.Remove(symbol);
+                }
+            }
+            else
+            {
+                foreach (var node in _children.Values)
+                {
+                    node.Prune(threshold, N - 1);
+                }
+            }
+        }
+
         /**
          * <summary>Save this NGramNode to a text file.</summary>
          *
