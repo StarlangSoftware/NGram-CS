@@ -491,6 +491,8 @@ namespace NGram
         {
             if (N == 0)
             {
+                TSymbol maxElement = default;
+                NGramNode<TSymbol> maxNode = null;
                 var toBeDeleted = new List<TSymbol>();
                 foreach (var symbol in _children.Keys)
                 {
@@ -498,11 +500,22 @@ namespace NGram
                     {
                         toBeDeleted.Add(symbol);
                     }
+
+                    if (maxNode == null || _children[symbol]._count > _children[maxElement]._count)
+                    {
+                        maxElement = symbol;
+                        maxNode = _children[symbol];
+                    }
                 }
 
                 foreach (var symbol in toBeDeleted)
                 {
                     _children.Remove(symbol);
+                }
+
+                if (_children.Count == 0)
+                {
+                    _children[maxElement] = maxNode;
                 }
             }
             else

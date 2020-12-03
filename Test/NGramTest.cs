@@ -95,12 +95,12 @@ namespace Test
             simpleBiGram.Prune(0.7);
             Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
             Assert.AreEqual(3, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
-            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"topu", "at"}), 0.0);
+            Assert.AreEqual(2, simpleBiGram.GetCount(new[] {"topu", "at"}), 0.0);
             simpleBiGram.Prune(0.8);
             Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
-            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
+            Assert.AreEqual(3, simpleBiGram.GetCount(new[] {"ali", "topu"}), 0.0);
             simpleBiGram.Prune(0.9);
-            Assert.AreEqual(0, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
+            Assert.AreEqual(4, simpleBiGram.GetCount(new[] {"<s>", "ali"}), 0.0);
         }
 
 
