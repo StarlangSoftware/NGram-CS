@@ -78,6 +78,22 @@ namespace NGram
                 }
             }
         }
+        
+        public void Merge(NGramNode<TSymbol> toBeMerged){
+            if (_children != null){
+                foreach (TSymbol symbol in _children.Keys){
+                    if (toBeMerged._children.ContainsKey(symbol)){
+                        _children[symbol].Merge(toBeMerged._children[symbol]);
+                    }
+                }
+                foreach (TSymbol symbol in toBeMerged._children.Keys){
+                    if (!_children.ContainsKey(symbol)){
+                        _children[symbol] = toBeMerged._children[symbol];
+                    }
+                }
+            }
+            _count += toBeMerged.GetCount();
+        }
 
         /**
          * <summary>Gets count of this node.</summary>

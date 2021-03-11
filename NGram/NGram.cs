@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using DataStructure;
 
 namespace NGram
@@ -87,6 +88,14 @@ namespace NGram
             ReadHeader(multipleFile.GetStreamReader());
             rootNode = new NGramNode<TSymbol>(true, multipleFile);
             multipleFile.Close();
+        }
+        
+        public void Merge(NGram<TSymbol> toBeMerged){
+            if (_n != toBeMerged.GetN()){
+                return;
+            }
+            _vocabulary.UnionWith(toBeMerged._vocabulary);
+            rootNode.Merge(toBeMerged.rootNode);
         }
 
         /**

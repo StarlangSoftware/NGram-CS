@@ -113,6 +113,23 @@ namespace Test
         }
 
         [Test]
+        public void TestMerge()
+        {
+            simpleUniGram = new NGram<string>("../../../simple1a.txt");
+            simpleUniGram.Merge(new NGram<string>("../../../simple1b.txt"));
+            Assert.AreEqual(18, simpleUniGram.VocabularySize(), 0.0);
+            simpleBiGram = new NGram<string>("../../../simple2a.txt");
+            simpleBiGram.Merge(new NGram<string>("../../../simple2b.txt"));
+            simpleBiGram.Merge(new NGram<string>("../../../simple2c.txt"));
+            simpleBiGram.Merge(new NGram<string>("../../../simple2d.txt"));
+            Assert.AreEqual(21, simpleBiGram.VocabularySize(), 0.0);
+            simpleTriGram = new NGram<string>("../../../simple3a.txt");
+            simpleTriGram.Merge(new NGram<string>("../../../simple3b.txt"));
+            simpleTriGram.Merge(new NGram<string>("../../../simple3c.txt"));
+            Assert.AreEqual(20, simpleTriGram.VocabularySize(), 0.0);
+        }
+
+        [Test]
         public void TestLoadMultiPart()
         {
             simpleUniGram = new NGram<string>("../../../simple1part1.txt", "../../../simple1part2.txt");
