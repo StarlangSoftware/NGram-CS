@@ -4,13 +4,13 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <PackageId>NlpToolkit-NGram</PackageId>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.6</PackageVersion>
+        <PackageVersion>1.0.7</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NlpToolkit-DataStructure" Version="1.0.1" />
-      <PackageReference Include="NlpToolkit-Math" Version="1.0.3" />
-      <PackageReference Include="NlpToolkit-Sampling" Version="1.0.2" />
+      <PackageReference Include="NlpToolkit-DataStructure" Version="1.0.2" />
+      <PackageReference Include="NlpToolkit-Math" Version="1.0.5" />
+      <PackageReference Include="NlpToolkit-Sampling" Version="1.0.3" />
     </ItemGroup>
 
 </Project>
