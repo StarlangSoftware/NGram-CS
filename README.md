@@ -23,7 +23,7 @@ Video Lectures
 For Developers
 ============
 
-You can also see [Java](https://github.com/starlangsoftware/NGram), [Python](https://github.com/starlangsoftware/NGram-Py), [Cython](https://github.com/starlangsoftware/NGram-Cy), [Swift](https://github.com/starlangsoftware/NGram-Swift), [Js](https://github.com/starlangsoftware/NGram-Js), or [C++](https://github.com/starlangsoftware/NGram-CPP) repository.
+You can also see [Java](https://github.com/starlangsoftware/NGram), [Python](https://github.com/starlangsoftware/NGram-Py), [Cython](https://github.com/starlangsoftware/NGram-Cy), [Swift](https://github.com/starlangsoftware/NGram-Swift), [C](https://github.com/starlangsoftware/NGram-C), [Js](https://github.com/starlangsoftware/NGram-Js), or [C++](https://github.com/starlangsoftware/NGram-CPP) repository.
 
 ## Requirements
 
