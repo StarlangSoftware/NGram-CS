@@ -26,7 +26,7 @@ namespace NGram
         }
 
         /**
-         * <summary>Constructor of {@link NGramNode}</summary>
+         * <summary>Constructor of NGramNode</summary>
          *
          * <param name="isRootNode">True if this node is root node, false otherwise.</param>
          * <param name="streamReader">        File to be read.</param>
@@ -55,6 +55,11 @@ namespace NGram
             }
         }
 
+        /// <summary>
+        /// Constructor of NGramNode
+        /// </summary>
+        /// <param name="isRootNode">True if this node is root node, false otherwise.</param>
+        /// <param name="multipleFile">Multiple file structure to read the nGram.</param>
         public NGramNode(bool isRootNode, MultipleFile multipleFile)
         {
             if (!isRootNode)
@@ -79,6 +84,10 @@ namespace NGram
             }
         }
         
+        /// <summary>
+        /// Merges this NGramNode with the corresponding NGramNode in another NGram.
+        /// </summary>
+        /// <param name="toBeMerged">Parallel NGramNode of the parallel NGram tree.</param>
         public void Merge(NGramNode<TSymbol> toBeMerged){
             if (_children != null){
                 foreach (TSymbol symbol in _children.Keys){
@@ -503,6 +512,12 @@ namespace NGram
             return default(TSymbol);
         }
 
+        /// <summary>
+        /// Prunes the NGramNode according to the given threshold. Removes the child(ren) whose probability is less than the
+        /// threshold.
+        /// </summary>
+        /// <param name="threshold">Threshold for pruning the NGram tree.</param>
+        /// <param name="N">N in N-Gram.</param>
         public void Prune(double threshold, int N)
         {
             if (N == 0)

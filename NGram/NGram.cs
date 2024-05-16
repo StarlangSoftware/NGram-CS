@@ -46,6 +46,10 @@ namespace NGram
             rootNode = new NGramNode<TSymbol>(default(TSymbol));
         }
 
+        /// <summary>
+        /// Reads the header from the input file.
+        /// </summary>
+        /// <param name="br">Input file</param>
         public void ReadHeader(StreamReader br)
         {
             var line = br.ReadLine();
@@ -82,6 +86,10 @@ namespace NGram
             br.Close();
         }
 
+        /// <summary>
+        /// Constructor of NGram class which takes a list of files to read.
+        /// </summary>
+        /// <param name="fileNameList">List of the files where NGram is saved.</param>
         public NGram(params string[] fileNameList)
         {
             var multipleFile = new MultipleFile(fileNameList);
@@ -90,6 +98,11 @@ namespace NGram
             multipleFile.Close();
         }
         
+        /// <summary>
+        /// Merges current NGram with the given NGram. If N of the two NGram's are not same, it does not
+        /// merge. Merges first the vocabulary, then the NGram trees.
+        /// </summary>
+        /// <param name="toBeMerged">NGram to be merged with.</param>
         public void Merge(NGram<TSymbol> toBeMerged){
             if (_n != toBeMerged.GetN()){
                 return;
@@ -536,6 +549,11 @@ namespace NGram
             _probabilityOfUnseen[height - 1] = 1.0 / (VocabularySize() + 1);
         }
 
+        /// <summary>
+        /// Prunes NGram according to the given threshold. All nodes having a probability less than the threshold will be
+        /// pruned.
+        /// </summary>
+        /// <param name="threshold">Probability threshold used for pruning.</param>
         public void Prune(double threshold)
         {
             if (threshold > 0.0 && threshold <= 1.0)

@@ -4,11 +4,18 @@ namespace NGram
     {
         private readonly double _delta;
 
+        /// <summary>
+        /// Constructor for Laplace smoothing. Sets the delta to 1.0
+        /// </summary>
         public LaplaceSmoothing()
         {
             _delta = 1.0;
         }
 
+        /// <summary>
+        /// Constructor for Laplace smoothing. Sets the delta.
+        /// </summary>
+        /// <param name="delta">Delta value in Laplace smoothing.</param>
         public LaplaceSmoothing(double delta)
         {
             this._delta = delta;
